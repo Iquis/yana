@@ -1,3 +1,8 @@
 /yana/.idea/*
 /yana/yana.Core/obj/Debug/*
 /yana/yana.Tests/obj/Debug/*
+/yana/yana.Core/bin/Debug/*
+/yana/yana.Core/obj/*
+/yana/yana.Tests/bin/*
+/yana/yana.Tests/obj/
+/yana/yana.sln.DotSettings.user

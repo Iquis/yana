@@ -1,6 +1,6 @@
 ﻿namespace yana.Core.Dto;
 
-public class RssChannel
+public class RssChannel : IDto
 {
     public string Title { get; set; }
     public string Link { get; set; }

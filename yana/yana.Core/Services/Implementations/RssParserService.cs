@@ -1,36 +1,21 @@
 ﻿using System.Text;
 using System.Xml.Serialization;
-using yana.Core.Dto;
-using yana.Core.Models;
+using yana.Core.Models.Rss;
+using RssChannel = yana.Core.Dto.RssChannel;
 
 namespace yana.Core.Services.Implementations;
 
 public class RssParserService : IRssParserService
 {
-    public IEnumerable<RssChannel> GetChannels(string input)
+    public RssChannel ParseChannel(string input)
     {
-        var xmlSerializer = new XmlSerializer(typeof(Rss));
+        var xmlSerializer = new XmlSerializer(typeof(RssModel));
         
         var memoryStream = this.GetStreamFromXmlString(input);
 
-        var rss = (Rss)xmlSerializer.Deserialize(memoryStream)!;
-
-        var result = new List<RssChannel>();
-
-        result.Add(new RssChannel()
-        {
-            Description = rss.Channel.Description,
-            Link = rss.Channel.Link,
-            Title = rss.Channel.Title,
-            Items = rss.Channel.Item.Select(x => new RssItem()
-            {
-                Description = x.Description,
-                Link = x.Link,
-                Title = x.Title
-            })
-        });
-
-        return result;
+        var rss = (RssModel)xmlSerializer.Deserialize(memoryStream)!;
+        
+        return rss.Channel.ToDto();
     }
     
     private Stream GetStreamFromXmlString(string xmlString)

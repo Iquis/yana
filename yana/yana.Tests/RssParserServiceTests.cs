@@ -11,15 +11,13 @@ public class RssParserServiceTests
     private readonly IRssParserService _rssParserService = new RssParserService();
     
     [Fact]
-    public void ShouldReturnAllChannels()
+    public void ShouldParseChannel()
     {
         string input = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\">\n\n<channel>\n  <title>W3Schools Home Page</title>\n  <link>https://www.w3schools.com</link>\n  <description>Free web building tutorials</description>\n  <item>\n    <title>RSS Tutorial</title>\n    <link>https://www.w3schools.com/xml/xml_rss.asp</link>\n    <description>New RSS tutorial on W3Schools</description>\n  </item>\n  <item>\n    <title>XML Tutorial</title>\n    <link>https://www.w3schools.com/xml</link>\n    <description>New XML tutorial on W3Schools</description>\n  </item>\n</channel>\n\n</rss>";
-        var result = _rssParserService.GetChannels(input).ToList();
+        var channel = _rssParserService.ParseChannel(input);
         
-        Assert.NotEmpty(result);
-        Assert.Single(result);
+        Assert.NotNull(channel);
 
-        var channel = result.First();
         
         Assert.Equal("W3Schools Home Page", channel.Title);
         Assert.Equal("https://www.w3schools.com", channel.Link);
